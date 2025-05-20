@@ -1,0 +1,6 @@
+  body { font: 14px sans-serif; background: #f0f0f0; margin: 0; padding: 0; }
+form { background: #fff; padding: 10px; position: fixed; bottom: 0; width: 100%; display: flex; }
+input { flex-grow: 1; padding: 10px; font-size: 16px; }
+button { padding: 10px; background: #333; color: #fff; border: none; }
+ul { list-style-type: none; margin: 0; padding: 0; }
+li { padding: 8px 10px; border-bottom: 1px solid #ccc; }
