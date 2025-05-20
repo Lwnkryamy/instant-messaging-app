@@ -1,0 +1,179 @@
+/* Basic Telegram-like styling */
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #e5ddd5;
+  color: #222;
+  height: 100vh;
+  display: flex;
+}
+
+.app-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 300px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #ddd;
+}
+
+.sidebar header {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+}
+
+#chat-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+#chat-list li {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+#chat-list li:hover {
+  background: #f0f0f0;
+}
+
+#new-chat-btn {
+  padding: 1rem;
+  border: none;
+  background: #009688;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.chat-window {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background: #f9f9f9;
+}
+
+#chat-header {
+  background: #075e54;
+  color: white;
+  padding: 1rem;
+  font-weight: bold;
+}
+
+#messages {
+  flex-grow: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  background: #ece5dd;
+}
+
+.message {
+  margin-bottom: 0.75rem;
+  max-width: 60%;
+  padding: 0.5rem 1rem;
+  border-radius: 7.5px;
+  clear: both;
+  word-wrap: break-word;
+}
+
+.message.self {
+  background: #dcf8c6;
+  margin-left: auto;
+}
+
+.message.other {
+  background: white;
+  margin-right: auto;
+}
+
+.message .file-link {
+  color: #0645ad;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#message-form {
+  display: flex;
+  padding: 0.5rem;
+  background: white;
+  border-top: 1px solid #ddd;
+}
+
+#message-input {
+  flex-grow: 1;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  margin-right: 0.5rem;
+}
+
+#file-input {
+  margin-right: 0.5rem;
+}
+
+#message-form button {
+  background: #075e54;
+  border: none;
+  color: white;
+  padding: 0 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+/* === Existing CSS (chat layout, message bubbles, etc.) === */
+/* [Paste full styles from the earlier `styles.css`] */
+
+/* === Bonus: Dark Theme === */
+.dark-theme {
+  background: #121212;
+  color: #ddd;
+}
+
+.dark-theme .sidebar {
+  background: #222;
+  color: #ddd;
+  border-right: 1px solid #444;
+}
+
+.dark-theme #chat-header {
+  background: #1f1f1f;
+}
+
+.dark-theme #messages {
+  background: #1e1e1e;
+}
+
+.dark-theme .message.self {
+  background: #056162;
+  color: #eee;
+}
+
+.dark-theme .message.other {
+  background: #2a2a2a;
+  color: #ccc;
+}
+
+.dark-theme #message-input {
+  background: #333;
+  border: 1px solid #555;
+  color: #eee;
+}
+
+.dark-theme #message-form button {
+  background: #056162;
+}
+
+
