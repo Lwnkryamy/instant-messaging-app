@@ -229,13 +229,18 @@ app.post('/upload', upload.single('file'), (req, res) => {
 });
 
 // --- SOCKET.IO ---
-// Make session available to Socket.IO connections
-io.engine.use(sessionMiddleware);
+
+// IMPORTANT: Socket.IO middleware to attach session to socket. This is more robust.
+io.use((socket, next) => {
+    // Wrap the express-session middleware to work with Socket.IO
+    sessionMiddleware(socket.request, {}, next);
+});
 
 io.on('connection', (socket) => {
     console.log(`Socket connected: ${socket.id}`);
 
-    // Check for session-authenticated user
+    // Access session data from socket.request.session (or now socket.session if preferred)
+    // The sessionMiddleware above attaches it to socket.request.session
     if (!socket.request.session || !socket.request.session.user || !socket.request.session.user.username) {
         console.log(`Socket ${socket.id} tried to connect without active session. Disconnecting.`);
         socket.emit('auth_required'); // Tell client to re-authenticate
@@ -248,17 +253,15 @@ io.on('connection', (socket) => {
 
     // If user is not found in the global 'users' array (e.g., server restart after session persists)
     if (!currentUserInList) {
-        // This is a temporary user creation. In a real app, you'd fetch from DB.
         currentUserInList = {
             socketId: socket.id,
             username: connectedUsername,
-            passwordHash: 'N/A_Dummy_SessionUser', // Dummy password for a session-found user
+            passwordHash: 'N/A_Dummy_SessionUser',
             isOnline: true
         };
         users.push(currentUserInList);
         console.warn(`Authenticated user ${connectedUsername} (from session) not found in user list, added temporarily.`);
     } else {
-        // Update existing user's socketId and online status
         currentUserInList.socketId = socket.id;
         currentUserInList.isOnline = true;
     }
@@ -266,7 +269,9 @@ io.on('connection', (socket) => {
     // Update session with current socket ID if it's the first connection or ID changed
     if (socket.request.session.user.socketId !== socket.id) {
         socket.request.session.user.socketId = socket.id;
-        socket.request.session.save(); // Save session to update socketId
+        // No need to call save() here if it's just updating the socketId for the current session.
+        // The session is typically saved automatically at the end of the request.
+        // If you need to force save for some reason, uncomment: socket.request.session.save();
     }
 
     console.log(`User ${connectedUsername} (${socket.id}) connected.`);
